@@ -1,0 +1,34 @@
+{% extends 'mvapp/base.html' %}
+{% load static %}
+{%block title %}Modificar Película{% endblock %}
+{%block content %}
+{% include 'mvapp/includes/mvapp_menu.html' %}
+<main role="main">
+  <div class="container">
+    <div class="row mb-5 mt-3">
+      <div class="col-md-9 mx-auto">
+            {% if 'ok' in request.GET %}
+              <p style="color:green;">Película modificada correctamente
+                <a href="{% url 'movies' %}">
+                  Haz clic para ver el la lista de películas con la modificacion
+                </a>
+              </p>
+            {% endif %}        
+            <form action="" method="post" enctype='multipart/form-data'>{% csrf_token %}
+                  {{ form.as_p }}
+
+                  {% if movie.image %}                              
+                    <img class="rounded float-left img-thumbnail img-fluid"  width="164" height="96" src="{{movie.image.url}}"/>
+                  {% else %}
+                    <img class="rounded float-left img-thumbnail img-fluid"  width="164" height="96" src="{% static 'mvapp/img/movies.jpg' %}">
+                  {% endif  %} 
+
+                <div class="text-center">
+                  <input type="submit" class="btn btn-primary btn-block" value="Modificar Película" />
+                </div>
+            </form>
+      </div>
+    </div>
+  </div>
+</main>
+{%endblock%}

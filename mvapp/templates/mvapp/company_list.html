@@ -1,0 +1,30 @@
+{% extends 'mvapp/base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ titulo }}
+{% endblock title %}
+    
+{% block content %}
+<main role="main" class="container">
+    <h2>{{ titulo }}</h2>
+    {% if company_list %}      
+        <div class="list-group">            
+        {% for company in company_list %}
+            <div class="card">
+              <h5 class="card-header">{{ company.id }} / {{ company.name }} </h5>
+            </div>
+        {% endfor %}
+	</div>
+    {% else %}
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{% static 'mvapp/img/pochoclos.jpg' %}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Compañías</h5>
+          <p class="card-text">Sin compañías ingresados en la Base de Datos del sitio, por favor regrese en breve estaremos cargando nuestro stock</p>
+          <a href="{% url 'home' %}" class="btn btn-primary">Inicio</a>
+        </div>
+    </div>
+    {% endif %}
+</main>
+{% endblock content %}

@@ -1,0 +1,16 @@
+{% extends 'mvapp/base.html' %}
+{% load static %}
+{%block title %}Nueva Película{% endblock %}
+{%block content %}
+{% include 'mvapp/includes/mvapp_menu.html' %}
+<main role="main">
+  <div class="container">
+    <div class="row mb-5 mt-3">
+            <form action="" method="post" enctype='multipart/form-data'>{% csrf_token %}
+                  {{ form.as_p }}                
+                  <input type="submit" class="btn btn-primary" value="Crear Película" />                
+            </form>
+    </div>
+  </div>
+</main>
+{%endblock%}

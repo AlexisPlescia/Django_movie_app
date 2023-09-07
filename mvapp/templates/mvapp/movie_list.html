@@ -1,0 +1,47 @@
+{% extends 'mvapp/base.html' %}
+{% load static %}
+{%block title %}Lista de Películas{% endblock %}
+{%block content %}
+{% include 'mvapp/includes/mvapp_menu.html' %}
+<main role="main" class="container">
+    {% if movie_list %}      
+        <div class="list-group">            
+        {% for movie in movie_list %}
+            <div class="card">
+              <h5 class="card-header">{{ movie.name }} [{{movie.premiere}}]</h5>
+              <div class="row">
+                <div class="col-lg-12">
+                  {% if movie.image %}                              
+                    <img class="rounded float-left img-thumbnail img-fluid"  width="164" height="96" src="{{movie.image.url}}" alt="{{movie.image.url}}"/>
+                  {% else %}
+                    <img class="rounded float-left img-thumbnail img-fluid"  width="164" height="96" src="{% static 'mvapp/img/movies.jpg' %}">
+                  {% endif  %}       
+                    {% comment %} <p class="card-text">{{movie.description|safe|truncatechars:150}}</p> {% endcomment %}                          
+                    <div class="text-left m-2 mx-4"><span>{{movie.description|safe}}</span></div>
+                </div>
+            </div>
+            {% if request.user.is_staff %}
+              <div class="card-body">
+                  <a href="{% url 'movie-update' movie.id %}" class="btn btn-sm btn-primary">Editar</a>
+                  <a href="{% url 'movie-delete' movie.id %}" class="btn btn-sm btn-danger">Eliminar</a>
+              </div>
+            {% endif %}
+              <div class="card-footer text-muted">
+                {{movie.company}}
+              </div>              
+            </div>
+            <br>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{% static 'mvapp/img/pochoclos.jpg' %}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Películas</h5>
+          <p class="card-text">Sin películas ingresadas en la Base de Datos del sitio, por favor regrese en breve estaremos cargando nuestro stock</p>
+          <a href="{% url 'home' %}" class="btn btn-primary">Inicio</a>
+        </div>
+    </div>
+    {% endif %}
+</main>
+{%endblock%}
